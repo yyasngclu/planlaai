@@ -24,7 +24,7 @@ function Header() {
           className="text-black-800 italic text-sm"
           style={{ marginLeft: "20px", marginTop: "5px" }}
         >
-          finans asistanı
+          finans asistanınız..
         </span>
       </div>
 
