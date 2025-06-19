@@ -22,9 +22,9 @@ function Header() {
         </Link>
         <span
           className="text-black-800 italic text-sm"
-          style={{ marginLeft: "20px", marginTop: "5px" }}
+          style={{ marginLeft: "15px", marginTop: "5px" }}
         >
-          finans asistanınız..
+          finans asistanı
         </span>
       </div>
 
