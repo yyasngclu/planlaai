@@ -21,7 +21,7 @@ function Header() {
           </span>
         </Link>
         <span
-          className="text-black-800 italic text-l"
+          className="text-black-800 italic text-sm"
           style={{ marginLeft: "20px", marginTop: "5px" }}
         >
           finans asistanınız..
