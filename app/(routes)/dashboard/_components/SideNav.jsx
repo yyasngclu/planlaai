@@ -57,7 +57,7 @@ function SideNav() {
             className="text-red-800  font-bold text-3xl"
             style={{ marginLeft: "5px" }}
           >
-            Investelling
+            PlanlaAI
           </span>
         </Link>
       </div>
