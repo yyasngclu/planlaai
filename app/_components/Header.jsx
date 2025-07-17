@@ -17,7 +17,7 @@ function Header() {
             className="text-red-800 font-bold text-3xl cursor-pointer"
             style={{ marginLeft: "5px" }}
           >
-            Investelling
+            PlanlaAI
           </span>
         </Link>
         <span
