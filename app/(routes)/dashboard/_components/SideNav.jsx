@@ -51,7 +51,7 @@ function SideNav() {
   return (
     <div className="h-screen p-5 border shadow-sm">
       <div className="flex flex-row items-center">
-        <Image src={"./investelling.png"} alt="logo" width={40} height={25} />
+        <Image src={"/planlaai.png"} alt="logo" width={40} height={25}  />
         <Link href="/">
           <span
             className="text-red-800  font-bold text-3xl"
