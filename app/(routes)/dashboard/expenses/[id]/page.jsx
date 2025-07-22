@@ -90,7 +90,7 @@ function ExpensesScreen({ params }) {
       <h2 className="text-2xl font-bold gap-2 flex justify-between items-center">
         <span className="flex gap-2 items-center">
           <ArrowLeft onClick={() => route.back()} className="cursor-pointer" />
-          My Expenses
+          Giderlerim
         </span>
         <div className="flex gap-2 items-center">
           <EditBudget
@@ -101,22 +101,24 @@ function ExpensesScreen({ params }) {
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <Button className="flex gap-2 rounded-full" variant="destructive">
-                <Trash className="w-4" /> Delete
+                <Trash className="w-4" /> Gideri Sil
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogTitle>
+                  Silmek istediğinize emin misiniz?
+                </AlertDialogTitle>
                 <AlertDialogDescription>
-                  This action cannot be undone. This will permanently delete
-                  your current budget along with expenses and remove your data
-                  from our servers.
+                  "Bu işlem geri alınamaz. Bu, mevcut bütçenizi ve giderlerinizi
+                  kalıcı olarak silecek ve verilerinizi sunucularımızdan
+                  kaldıracaktır."
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogCancel>İptal Et</AlertDialogCancel>
                 <AlertDialogAction onClick={() => deleteBudget()}>
-                  Continue
+                  Devam Et
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>

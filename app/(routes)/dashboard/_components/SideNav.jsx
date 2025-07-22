@@ -6,8 +6,6 @@ import {
   ReceiptText,
   ShieldCheck,
   CircleDollarSign,
-  TrendingUp,
-  TrendingDownIcon,
 } from "lucide-react";
 import { UserButton } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
@@ -16,43 +14,31 @@ function SideNav() {
   const menuList = [
     {
       id: 1,
-      name: "Dashboard",
+      name: "Gösterge Paneli",
       icon: LayoutGrid,
       path: "/dashboard",
     },
     {
       id: 2,
-      name: "Incomes",
+      name: "Gelirler",
       icon: CircleDollarSign,
       path: "/dashboard/incomes",
     },
     {
       id: 2,
-      name: "Budgets",
+      name: "Bütçeler",
       icon: PiggyBank,
       path: "/dashboard/budgets",
     },
     {
       id: 3,
-      name: "Expenses",
+      name: "Giderler",
       icon: ReceiptText,
       path: "/dashboard/expenses",
     },
-    // {
-    //   id: 2,
-    //   name: "Investments",
-    //   icon: TrendingUp,
-    //   path: "/dashboard/investments",
-    // },
-    // {
-    //   id: 2,
-    //   name: "Debts",
-    //   icon: TrendingDownIcon,
-    //   path: "/dashboard/debts",
-    // },
     {
       id: 4,
-      name: "Upgrade",
+      name: "Hesabınızı Yükseltin",
       icon: ShieldCheck,
       path: "/dashboard/upgrade",
     },
@@ -64,25 +50,27 @@ function SideNav() {
   }, [path]);
   return (
     <div className="h-screen p-5 border shadow-sm">
-      {/* <Image src={'/logo.svg'}
-        alt='logo'
-        width={160}
-        height={100}
-        /> */}
       <div className="flex flex-row items-center">
-        <Image src={"./chart-donut.svg"} alt="logo" width={40} height={25} />
-        <span className="text-blue-800 font-bold text-xl">FinanSmart</span>
+        <Image src={"./planlaai.png"} alt="logo" width={40} height={25} />
+        <Link href="/">
+          <span
+            className="text-red-800  font-bold text-3xl"
+            style={{ marginLeft: "5px" }}
+          >
+            PlanlaAI
+          </span>
+        </Link>
       </div>
       <div className="mt-5">
         {menuList.map((menu, index) => (
           <Link href={menu.path} key={index}>
             <h2
               className={`flex gap-2 items-center
-                    text-gray-500 font-medium
+                    text-black-500 font-medium
                     mb-2
                     p-4 cursor-pointer rounded-full
-                    hover:text-primary hover:bg-blue-100
-                    ${path == menu.path && "text-primary bg-blue-100"}
+                    hover:text-red-800 hover:bg-red-100
+                    ${path == menu.path && "text-red-800 bg-red-100"}
                     `}
             >
               <menu.icon />
@@ -96,7 +84,7 @@ function SideNav() {
             items-center"
       >
         <UserButton />
-        Profile
+        Profil
       </div>
     </div>
   );

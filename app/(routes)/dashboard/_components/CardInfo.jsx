@@ -63,7 +63,7 @@ function CardInfo({ budgetList, incomeList }) {
           <div className="p-7 border mt-4 -mb-1 rounded-2xl flex items-center justify-between">
             <div className="">
               <div className="flex mb-2 flex-row space-x-1 items-center ">
-                <h2 className="text-md ">Finan Smart AI</h2>
+                <h2 className="text-md ">Finans Asistanın</h2>
                 <Sparkles
                   className="rounded-full text-white w-10 h-10 p-2
     bg-gradient-to-r
@@ -74,7 +74,7 @@ function CardInfo({ budgetList, incomeList }) {
                 />
               </div>
               <h2 className="font-light text-md">
-                {financialAdvice || "Loading financial advice..."}
+                {financialAdvice || "Finansal tavsiyeniz oluşturuluyor..."}
               </h2>
             </div>
           </div>
@@ -82,37 +82,37 @@ function CardInfo({ budgetList, incomeList }) {
           <div className="mt-7 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             <div className="p-7 border rounded-2xl flex items-center justify-between">
               <div>
-                <h2 className="text-sm">Total Budget</h2>
+                <h2 className="text-sm">Toplam Bütçe</h2>
                 <h2 className="font-bold text-2xl">
-                  ${formatNumber(totalBudget)}
+                  ₺{formatNumber(totalBudget)}
                 </h2>
               </div>
-              <PiggyBank className="bg-blue-800 p-3 h-12 w-12 rounded-full text-white" />
+              <PiggyBank className="bg-red-800 p-3 h-12 w-12 rounded-full text-white" />
             </div>
             <div className="p-7 border rounded-2xl flex items-center justify-between">
               <div>
-                <h2 className="text-sm">Total Spend</h2>
+                <h2 className="text-sm">Toplam Harcama</h2>
                 <h2 className="font-bold text-2xl">
-                  ${formatNumber(totalSpend)}
+                  ₺{formatNumber(totalSpend)}
                 </h2>
               </div>
-              <ReceiptText className="bg-blue-800 p-3 h-12 w-12 rounded-full text-white" />
+              <ReceiptText className="bg-red-800 p-3 h-12 w-12 rounded-full text-white" />
             </div>
             <div className="p-7 border rounded-2xl flex items-center justify-between">
               <div>
-                <h2 className="text-sm">No. Of Budget</h2>
+                <h2 className="text-sm">Bütçe Sayısı</h2>
                 <h2 className="font-bold text-2xl">{budgetList?.length}</h2>
               </div>
-              <Wallet className="bg-blue-800 p-3 h-12 w-12 rounded-full text-white" />
+              <Wallet className="bg-red-800 p-3 h-12 w-12 rounded-full text-white" />
             </div>
             <div className="p-7 border rounded-2xl flex items-center justify-between">
               <div>
-                <h2 className="text-sm">Sum of Income Streams</h2>
+                <h2 className="text-sm">Gelir Kaynaklarının Toplamı</h2>
                 <h2 className="font-bold text-2xl">
-                  ${formatNumber(totalIncome)}
+                  ₺{formatNumber(totalIncome)}
                 </h2>
               </div>
-              <CircleDollarSign className="bg-blue-800 p-3 h-12 w-12 rounded-full text-white" />
+              <CircleDollarSign className="bg-red-800 p-3 h-12 w-12 rounded-full text-white" />
             </div>
           </div>
         </div>

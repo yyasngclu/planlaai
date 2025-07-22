@@ -57,12 +57,12 @@ function EditBudget({ budgetInfo, refreshData }) {
         <DialogTrigger asChild>
           <Button className="flex space-x-2 gap-2 rounded-full">
             {" "}
-            <PenBox className="w-4" /> Edit
+            <PenBox className="w-4" /> Düzenle
           </Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Update Budget</DialogTitle>
+            <DialogTitle>Bütçeyi Güncelle</DialogTitle>
             <DialogDescription>
               <div className="mt-5">
                 <Button
@@ -82,19 +82,19 @@ function EditBudget({ budgetInfo, refreshData }) {
                   />
                 </div>
                 <div className="mt-2">
-                  <h2 className="text-black font-medium my-1">Budget Name</h2>
+                  <h2 className="text-black font-medium my-1">Bütçe Adı</h2>
                   <Input
-                    placeholder="e.g. Home Decor"
+                    placeholder="örn. Ev Dekorasyonu"
                     defaultValue={budgetInfo?.name}
                     onChange={(e) => setName(e.target.value)}
                   />
                 </div>
                 <div className="mt-2">
-                  <h2 className="text-black font-medium my-1">Budget Amount</h2>
+                  <h2 className="text-black font-medium my-1">Bütçe Miktarı</h2>
                   <Input
                     type="number"
                     defaultValue={budgetInfo?.amount}
-                    placeholder="e.g. 5000$"
+                    placeholder="örn. 5000₺"
                     onChange={(e) => setAmount(e.target.value)}
                   />
                 </div>
@@ -108,7 +108,7 @@ function EditBudget({ budgetInfo, refreshData }) {
                 onClick={() => onUpdateBudget()}
                 className="mt-5 w-full rounded-full"
               >
-                Update Budget
+                Bütçeyi Güncelle
               </Button>
             </DialogClose>
           </DialogFooter>

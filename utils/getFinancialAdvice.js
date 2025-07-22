@@ -1,15 +1,12 @@
-// utils/getFinancialAdvice.js
 import OpenAI from "openai";
 
-// Initialize the OpenAI client
+// DİKKAT: API anahtarınızı frontend'de kullanmak güvenli değildir. Sadece test amaçlı kullanın!
 const openai = new OpenAI({
-  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
+  apiKey:
+    "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",
   dangerouslyAllowBrowser: true,
 });
 
-// Function to fetch user-specific data (mocked for this example)
-
-// Function to generate personalized financial advice
 const getFinancialAdvice = async (totalBudget, totalIncome, totalSpend) => {
   console.log(totalBudget, totalIncome, totalSpend);
   try {
@@ -34,7 +31,7 @@ const getFinancialAdvice = async (totalBudget, totalIncome, totalSpend) => {
     return advice;
   } catch (error) {
     console.error("Error fetching financial advice:", error);
-    return "Sorry, I couldn't fetch the financial advice at this moment. Please try again later.";
+    return "Üzgünüm, şu anda finansal tavsiyeyi oluşturamadım. Lütfen daha sonra tekrar deneyin. 😔";
   }
 };
 

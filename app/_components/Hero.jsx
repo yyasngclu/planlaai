@@ -10,16 +10,17 @@ function Hero() {
           titleComponent={
             <>
               <h1 className="text-4xl font-semibold text-black dark:text-white">
-                Manage your Money with AI-Driven Personal <br />
-                <span className="text-4xl md:text-[6rem] text-blue-800 font-bold mt-1 leading-none">
-                  Finance Advisor
+                Yapay Zeka Destekli Finans Uygulamamızla Paranızı Yönetin.{" "}
+                <br />
+                <span className="text-4xl md:text-[6rem] text-red-800 font-bold mt-1 leading-none">
+                  Finans Asistanınız
                 </span>
               </h1>
             </>
           }
         >
           <Image
-            src={`/dashboard.png`}
+            src={`/onboarding.png`}
             alt="hero"
             height={720}
             width={1400}

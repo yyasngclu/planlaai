@@ -1,5 +1,5 @@
 {
-  "name": "ai-expense-advisor",
+  "name": "PlanlaAI",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^4.30.0",
+    "@google/genai": "^1.5.1",
     "@neondatabase/serverless": "^0.9.4",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-dialog": "^1.0.5",

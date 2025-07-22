@@ -1,45 +1,37 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { db } from "@/utils/dbConfig";
-import { Budgets, Expenses } from "@/utils/schema";
+import { Expenses } from "@/utils/schema";
 import { Loader } from "lucide-react";
-import moment from "moment";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
-function AddExpense({ budgetId, user, refreshData, onClose }) {
-  const [name, setName] = useState("");
-  const [amount, setAmount] = useState("");
+function EditExpense({ expense, refreshData, onClose }) {
+  const [name, setName] = useState(expense.name || "");
+  const [amount, setAmount] = useState(expense.amount || "");
   const [loading, setLoading] = useState(false);
-  /**
-   * Used to Add New Expense
-   */
-  const addNewExpense = async () => {
+
+  const updateExpense = async () => {
     setLoading(true);
     const result = await db
-      .insert(Expenses)
-      .values({
+      .update(Expenses)
+      .set({
         name: name,
         amount: amount,
-        budgetId: budgetId || null,
-        createdAt: moment().format("DD/MM/yyyy"),
-        createdBy: user?.primaryEmailAddress.emailAddress,
       })
-      .returning({ insertedId: Expenses.id });
-
-    setAmount("");
-    setName("");
+      .where(Expenses.id.eq(expense.id))
+      .returning();
+    setLoading(false);
     if (result) {
-      setLoading(false);
+      toast("Gider güncellendi!");
       refreshData();
-      toast("Yeni Gider Eklendi!");
       onClose && onClose();
     }
-    setLoading(false);
   };
+
   return (
     <div className="border p-5 rounded-2xl bg-white w-[350px]">
-      <h2 className="font-bold text-lg">Gider Ekle</h2>
+      <h2 className="font-bold text-lg mb-2">Gideri Düzenle</h2>
       <div className="mt-2">
         <h2 className="text-black font-medium my-1">Gider Adı</h2>
         <Input
@@ -59,10 +51,10 @@ function AddExpense({ budgetId, user, refreshData, onClose }) {
       <div className="flex gap-2 mt-3">
         <Button
           disabled={!(name && amount) || loading}
-          onClick={() => addNewExpense()}
+          onClick={updateExpense}
           className="w-full rounded-full"
         >
-          {loading ? <Loader className="animate-spin" /> : "Yeni Gider Ekle"}
+          {loading ? <Loader className="animate-spin" /> : "Kaydet"}
         </Button>
         <Button
           variant="outline"
@@ -76,4 +68,4 @@ function AddExpense({ budgetId, user, refreshData, onClose }) {
   );
 }
 
-export default AddExpense;
+export default EditExpense; 

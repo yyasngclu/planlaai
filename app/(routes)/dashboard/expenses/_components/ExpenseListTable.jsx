@@ -5,7 +5,7 @@ import { Trash } from "lucide-react";
 import React from "react";
 import { toast } from "sonner";
 
-function ExpenseListTable({ expensesList, refreshData }) {
+function ExpenseListTable({ expensesList = [], refreshData, onEdit }) {
   const deleteExpense = async (expense) => {
     const result = await db
       .delete(Expenses)
@@ -19,15 +19,16 @@ function ExpenseListTable({ expensesList, refreshData }) {
   };
   return (
     <div className="mt-3">
-      <h2 className="font-bold text-lg">Latest Expenses</h2>
-      <div className="grid grid-cols-4 rounded-tl-xl rounded-tr-xl bg-slate-200 p-2 mt-3">
-        <h2 className="font-bold">Name</h2>
-        <h2 className="font-bold">Amount</h2>
-        <h2 className="font-bold">Date</h2>
-        <h2 className="font-bold">Action</h2>
+      <h2 className="font-bold text-lg">Son Giderler</h2>
+      <div className="grid grid-cols-5 rounded-tl-xl rounded-tr-xl bg-slate-200 p-2 mt-3">
+        <h2 className="font-bold">Ad</h2>
+        <h2 className="font-bold">Tutar</h2>
+        <h2 className="font-bold">Tarih</h2>
+        <h2 className="font-bold">İşlem</h2>
+        <h2 className="font-bold">Düzenle</h2>
       </div>
       {expensesList.map((expenses, index) => (
-        <div className="grid grid-cols-4 bg-slate-50 rounded-bl-xl rounded-br-xl p-2">
+        <div key={expenses.id} className="grid grid-cols-5 bg-slate-50 rounded-bl-xl rounded-br-xl p-2 items-center">
           <h2>{expenses.name}</h2>
           <h2>{expenses.amount}</h2>
           <h2>{expenses.createdAt}</h2>
@@ -35,14 +36,16 @@ function ExpenseListTable({ expensesList, refreshData }) {
             onClick={() => deleteExpense(expenses)}
             className="text-red-500 cursor-pointer"
           >
-            Delete
+            Sil
           </h2>
-          {/* <h2>
-            <Trash
-              className="text-red-500 cursor-pointer"
-              onClick={() => deleteExpense(expenses)}
-            />
-          </h2> */}
+          <h2>
+            <button
+              className="text-blue-600 underline cursor-pointer"
+              onClick={() => onEdit && onEdit(expenses)}
+            >
+              Düzenle
+            </button>
+          </h2>
         </div>
       ))}
     </div>

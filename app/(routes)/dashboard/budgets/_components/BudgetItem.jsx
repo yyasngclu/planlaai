@@ -23,19 +23,19 @@ function BudgetItem({ budget }) {
             </h2>
             <div>
               <h2 className="font-bold">{budget.name}</h2>
-              <h2 className="text-sm text-gray-500">{budget.totalItem} Item</h2>
+              <h2 className="text-sm text-gray-500">{budget.totalItem} Öğe </h2>
             </div>
           </div>
-          <h2 className="font-bold text-primary text-lg"> ${budget.amount}</h2>
+          <h2 className="font-bold text-red-800 text-lg"> ₺{budget.amount}</h2>
         </div>
 
         <div className="mt-5">
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-xs text-slate-400">
-              ${budget.totalSpend ? budget.totalSpend : 0} Spend
+              ₺{budget.totalSpend ? budget.totalSpend : 0} Harcama
             </h2>
             <h2 className="text-xs text-slate-400">
-              ${budget.amount - budget.totalSpend} Remaining
+              ₺{budget.amount - budget.totalSpend} Kalan
             </h2>
           </div>
           <div
