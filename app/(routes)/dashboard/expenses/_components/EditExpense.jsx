@@ -30,25 +30,23 @@ function EditExpense({ expense, refreshData, onClose }) {
   };
 
   return (
-    <div className="border p-5 rounded-2xl bg-white w-[350px]">
-      <h2 className="font-bold text-lg mb-2">Gideri Düzenle</h2>
-      <div className="mt-2">
-        <h2 className="text-black font-medium my-1">Gider Adı</h2>
-        <Input
-          placeholder="örn. Banyo Dekorasyonu"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-      </div>
-      <div className="mt-2">
-        <h2 className="text-black font-medium my-1">Harcanan Miktar</h2>
-        <Input
-          placeholder="örn. 1000₺"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-        />
-      </div>
-      <div className="flex gap-2 mt-3">
+    <div className="bg-white p-6 rounded-xl w-[350px] flex flex-col gap-3">
+      <h2 className="font-bold text-xl mb-2">Gideri Düzenle</h2>
+      <Input
+        placeholder="Gider adı"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        className="mb-2"
+      />
+      <Input
+        placeholder="Tutar"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+        className="mb-2"
+        type="number"
+        min="0"
+      />
+      <div className="flex gap-2 mt-2">
         <Button
           disabled={!(name && amount) || loading}
           onClick={updateExpense}
