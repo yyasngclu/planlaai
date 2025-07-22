@@ -7,9 +7,9 @@ import moment from "moment";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
-function AddExpense({ budgetId, user, refreshData, onClose }) {
-  const [name, setName] = useState("");
-  const [amount, setAmount] = useState("");
+function AddExpense({ budgetId, user, refreshData }) {
+  const [name, setName] = useState();
+  const [amount, setAmount] = useState();
   const [loading, setLoading] = useState(false);
   /**
    * Used to Add New Expense
@@ -21,24 +21,22 @@ function AddExpense({ budgetId, user, refreshData, onClose }) {
       .values({
         name: name,
         amount: amount,
-        budgetId: budgetId || null,
-        createdAt: moment().format("DD/MM/yyyy"),
-        createdBy: user?.primaryEmailAddress.emailAddress,
+        budgetId: budgetId,
+        createdAt: moment().format("DD/MM/yyy"),
       })
-      .returning({ insertedId: Expenses.id });
+      .returning({ insertedId: Budgets.id });
 
     setAmount("");
     setName("");
     if (result) {
       setLoading(false);
       refreshData();
-      toast("Yeni Gider Eklendi!");
-      onClose && onClose();
+      toast("New Expense Added!");
     }
     setLoading(false);
   };
   return (
-    <div className="border p-5 rounded-2xl bg-white w-[350px]">
+    <div className="border p-5 rounded-2xl">
       <h2 className="font-bold text-lg">Gider Ekle</h2>
       <div className="mt-2">
         <h2 className="text-black font-medium my-1">Gider Adı</h2>
@@ -56,22 +54,13 @@ function AddExpense({ budgetId, user, refreshData, onClose }) {
           onChange={(e) => setAmount(e.target.value)}
         />
       </div>
-      <div className="flex gap-2 mt-3">
-        <Button
-          disabled={!(name && amount) || loading}
-          onClick={() => addNewExpense()}
-          className="w-full rounded-full"
-        >
-          {loading ? <Loader className="animate-spin" /> : "Yeni Gider Ekle"}
-        </Button>
-        <Button
-          variant="outline"
-          onClick={() => onClose && onClose()}
-          className="w-full rounded-full"
-        >
-          İptal
-        </Button>
-      </div>
+      <Button
+        disabled={!(name && amount) || loading}
+        onClick={() => addNewExpense()}
+        className="mt-3 w-full rounded-full"
+      >
+        {loading ? <Loader className="animate-spin" /> : "Yeni Gider Ekle"}
+      </Button>
     </div>
   );
 }

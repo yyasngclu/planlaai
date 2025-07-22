@@ -38,7 +38,7 @@ function IncomeList() {
         <CreateIncomes refreshData={() => getIncomelist()} />
         {incomelist?.length > 0
           ? incomelist.map((budget, index) => (
-              <IncomeItem budget={budget} key={index} refreshData={getIncomelist} />
+              <IncomeItem budget={budget} key={index} />
             ))
           : [1, 2, 3, 4, 5].map((item, index) => (
               <div
