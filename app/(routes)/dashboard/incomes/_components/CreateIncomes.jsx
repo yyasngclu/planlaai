@@ -23,8 +23,19 @@ function CreateIncomes({ refreshData }) {
 
   const [name, setName] = useState();
   const [amount, setAmount] = useState();
+  const [budgetId, setBudgetId] = useState();
 
   const { user } = useUser();
+  const [budgetOptions, setBudgetOptions] = useState([]);
+  React.useEffect(() => {
+    async function fetchBudgets() {
+      if (!user) return;
+      const response = await fetch(`/api/budgets?createdBy=${user?.primaryEmailAddress?.emailAddress}`);
+      const result = await response.json();
+      if (result.success) setBudgetOptions(result.data);
+    }
+    fetchBudgets();
+  }, [user]);
 
   /**
    * Used to Create New Budget
@@ -39,6 +50,7 @@ function CreateIncomes({ refreshData }) {
           amount: amount,
           createdBy: user?.primaryEmailAddress?.emailAddress,
           icon: emojiIcon,
+          budgetId: budgetId || null,
         }),
       });
 
@@ -95,12 +107,21 @@ function CreateIncomes({ refreshData }) {
                   />
                 </div>
                 <div className="mt-2">
-                  <h2 className="text-black font-medium my-1">Aylık Tutar</h2>
-                  <Input
-                    type="number"
-                    placeholder="örn. 5000₺"
-                    onChange={(e) => setAmount(e.target.value)}
-                  />
+                <h2 className="text-black font-medium my-1">Aylık Tutar</h2>
+                <Input
+                  type="number"
+                  placeholder="örn. 5000₺"
+                  onChange={(e) => setAmount(e.target.value)}
+                />
+                <div className="mt-2">
+                  <h2 className="text-black font-medium my-1">Bütçe Seç</h2>
+                  <select className="w-full border rounded px-2 py-1" value={budgetId} onChange={e => setBudgetId(e.target.value)}>
+                    <option value="">Bütçe seçiniz</option>
+                    {budgetOptions.map(b => (
+                      <option key={b.id} value={b.id}>{b.name} {b.goal ? `- ${b.goal}` : ""}</option>
+                    ))}
+                  </select>
+                </div>
                 </div>
               </div>
             </DialogDescription>

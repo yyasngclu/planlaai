@@ -9,6 +9,7 @@ import {
 export const Budgets = pgTable("budgets", {
   id: serial("id").primaryKey(),
   name: varchar("name").notNull(),
+  goal: varchar("goal"),
   amount: numeric("amount").notNull().default(0),
   icon: varchar("icon"),
   createdBy: varchar("createdBy").notNull(),
@@ -18,6 +19,7 @@ export const Incomes = pgTable("incomes", {
   id: serial("id").primaryKey(),
   name: varchar("name").notNull(),
   amount: numeric("amount").notNull().default(0),
+  budgetId: integer("budgetId").references(() => Budgets.id),
   icon: varchar("icon"),
   createdBy: varchar("createdBy").notNull(),
 });
