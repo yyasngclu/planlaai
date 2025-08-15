@@ -1,8 +1,5 @@
 "use client";
-import { db } from "@/utils/dbConfig";
-import { Budgets, Expenses } from "@/utils/schema";
 import { useUser } from "@clerk/nextjs";
-import { desc, eq, getTableColumns, sql } from "drizzle-orm";
 import React, { useEffect, useState } from "react";
 import BudgetItem from "../../budgets/_components/BudgetItem";
 import AddExpense from "../_components/AddExpense";
@@ -37,52 +34,54 @@ function ExpensesScreen({ params }) {
    * Get Budget Information
    */
   const getBudgetInfo = async () => {
-    const result = await db
-      .select({
-        ...getTableColumns(Budgets),
-        totalSpend: sql`sum(${Expenses.amount})`.mapWith(Number),
-        totalItem: sql`count(${Expenses.id})`.mapWith(Number),
-      })
-      .from(Budgets)
-      .leftJoin(Expenses, eq(Budgets.id, Expenses.budgetId))
-      .where(eq(Budgets.createdBy, user?.primaryEmailAddress?.emailAddress))
-      .where(eq(Budgets.id, params.id))
-      .groupBy(Budgets.id);
-
-    setbudgetInfo(result[0]);
-    getExpensesList();
+    try {
+      const response = await fetch(`/api/budgets/${params.id}?createdBy=${user?.primaryEmailAddress?.emailAddress}`);
+      const result = await response.json();
+      
+      if (result.success) {
+        setbudgetInfo(result.data);
+      }
+      getExpensesList();
+    } catch (error) {
+      console.error("Error fetching budget info:", error);
+    }
   };
 
   /**
    * Get Latest Expenses
    */
   const getExpensesList = async () => {
-    const result = await db
-      .select()
-      .from(Expenses)
-      .where(eq(Expenses.budgetId, params.id))
-      .orderBy(desc(Expenses.id));
-    setExpensesList(result);
-    console.log(result);
+    try {
+      const response = await fetch(`/api/expenses?budgetId=${params.id}`);
+      const result = await response.json();
+      
+      if (result.success) {
+        setExpensesList(result.data);
+      }
+    } catch (error) {
+      console.error("Error fetching expenses list:", error);
+    }
   };
 
   /**
    * Used to Delete budget
    */
   const deleteBudget = async () => {
-    const deleteExpenseResult = await db
-      .delete(Expenses)
-      .where(eq(Expenses.budgetId, params.id))
-      .returning();
+    try {
+      const response = await fetch(`/api/budgets/${params.id}`, {
+        method: "DELETE",
+      });
 
-    if (deleteExpenseResult) {
-      const result = await db
-        .delete(Budgets)
-        .where(eq(Budgets.id, params.id))
-        .returning();
+      const result = await response.json();
+      
+      if (result.success) {
+        toast("Budget Deleted !");
+        route.replace("/dashboard/budgets");
+      }
+    } catch (error) {
+      console.error("Error deleting budget:", error);
+      toast("Hata oluştu!");
     }
-    toast("Budget Deleted !");
-    route.replace("/dashboard/budgets");
   };
 
   return (

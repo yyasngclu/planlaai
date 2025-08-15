@@ -13,8 +13,7 @@ import {
 import EmojiPicker from "emoji-picker-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { db } from "@/utils/dbConfig";
-import { Incomes } from "@/utils/schema";
+
 import { useUser } from "@clerk/nextjs";
 import { toast } from "sonner";
 
@@ -31,19 +30,27 @@ function CreateIncomes({ refreshData }) {
    * Used to Create New Budget
    */
   const onCreateIncomes = async () => {
-    const result = await db
-      .insert(Incomes)
-      .values({
-        name: name,
-        amount: amount,
-        createdBy: user?.primaryEmailAddress?.emailAddress,
-        icon: emojiIcon,
-      })
-      .returning({ insertedId: Incomes.id });
+    try {
+      const response = await fetch("/api/incomes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: name,
+          amount: amount,
+          createdBy: user?.primaryEmailAddress?.emailAddress,
+          icon: emojiIcon,
+        }),
+      });
 
-    if (result) {
-      refreshData();
-      toast("Yeni Gelir Kaynağı Oluşturuldu!");
+      const result = await response.json();
+      
+      if (result.success) {
+        refreshData();
+        toast("Yeni Gelir Kaynağı Oluşturuldu!");
+      }
+    } catch (error) {
+      console.error("Error creating income:", error);
+      toast("Hata oluştu!");
     }
   };
   return (

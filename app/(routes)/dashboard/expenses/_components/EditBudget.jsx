@@ -15,9 +15,7 @@ import {
 import EmojiPicker from "emoji-picker-react";
 import { useUser } from "@clerk/nextjs";
 import { Input } from "@/components/ui/input";
-import { db } from "@/utils/dbConfig";
-import { Budgets } from "@/utils/schema";
-import { eq } from "drizzle-orm";
+
 import { toast } from "sonner";
 function EditBudget({ budgetInfo, refreshData }) {
   const [emojiIcon, setEmojiIcon] = useState(budgetInfo?.icon);
@@ -36,19 +34,26 @@ function EditBudget({ budgetInfo, refreshData }) {
     }
   }, [budgetInfo]);
   const onUpdateBudget = async () => {
-    const result = await db
-      .update(Budgets)
-      .set({
-        name: name,
-        amount: amount,
-        icon: emojiIcon,
-      })
-      .where(eq(Budgets.id, budgetInfo.id))
-      .returning();
+    try {
+      const response = await fetch(`/api/budgets/${budgetInfo.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: name,
+          amount: amount,
+          icon: emojiIcon,
+        }),
+      });
 
-    if (result) {
-      refreshData();
-      toast("Budget Updated!");
+      const result = await response.json();
+      
+      if (result.success) {
+        refreshData();
+        toast("Budget Updated!");
+      }
+    } catch (error) {
+      console.error("Error updating budget:", error);
+      toast("Hata oluştu!");
     }
   };
   return (

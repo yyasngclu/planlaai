@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { db } from "@/utils/dbConfig";
-import { Budgets, Expenses } from "@/utils/schema";
+
 import { Loader } from "lucide-react";
 import moment from "moment";
 import React, { useState } from "react";
@@ -16,23 +15,32 @@ function AddExpense({ budgetId, user, refreshData, onClose }) {
    */
   const addNewExpense = async () => {
     setLoading(true);
-    const result = await db
-      .insert(Expenses)
-      .values({
-        name: name,
-        amount: amount,
-        budgetId: budgetId || null,
-        createdAt: moment().format("DD/MM/yyyy"),
-        createdBy: user?.primaryEmailAddress.emailAddress,
-      })
-      .returning({ insertedId: Expenses.id });
-    setAmount("");
-    setName("");
-    if (result) {
-      setLoading(false);
-      refreshData();
-      toast("Yeni gider eklendi!");
-      onClose && onClose();
+    try {
+      const response = await fetch("/api/expenses", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: name,
+          amount: amount,
+          budgetId: budgetId || null,
+          createdAt: moment().format("DD/MM/yyyy"),
+          createdBy: user?.primaryEmailAddress.emailAddress,
+        }),
+      });
+
+      const result = await response.json();
+      setAmount("");
+      setName("");
+      
+      if (result.success) {
+        setLoading(false);
+        refreshData();
+        toast("Yeni gider eklendi!");
+        onClose && onClose();
+      }
+    } catch (error) {
+      console.error("Error adding expense:", error);
+      toast("Hata oluştu!");
     }
     setLoading(false);
   };

@@ -1,9 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import CreateBudget from './CreateBudget'
-import { db } from '@/utils/dbConfig'
-import { desc, eq, getTableColumns, sql } from 'drizzle-orm'
-import { Budgets, Expenses } from '@/utils/schema'
+
 import { useUser } from '@clerk/nextjs'
 import BudgetItem from './BudgetItem'
 
@@ -18,20 +16,16 @@ function BudgetList() {
    * used to get budget List
    */
   const getBudgetList=async()=>{
-
-    const result=await db.select({
-      ...getTableColumns(Budgets),
-      totalSpend:sql `sum(${Expenses.amount})`.mapWith(Number),
-      totalItem: sql `count(${Expenses.id})`.mapWith(Number)
-    }).from(Budgets)
-    .leftJoin(Expenses,eq(Budgets.id,Expenses.budgetId))
-    .where(eq(Budgets.createdBy,user?.primaryEmailAddress?.emailAddress))
-    .groupBy(Budgets.id)
-    .orderBy(desc(Budgets.id))
-    ;
-
-    setBudgetList(result);
-
+    try {
+      const response = await fetch(`/api/budgets?createdBy=${user?.primaryEmailAddress?.emailAddress}`);
+      const result = await response.json();
+      
+      if (result.success) {
+        setBudgetList(result.data);
+      }
+    } catch (error) {
+      console.error("Error fetching budgets:", error);
+    }
   }
 
   return (

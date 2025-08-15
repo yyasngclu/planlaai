@@ -5,8 +5,7 @@ import AddExpense from "./_components/AddExpense";
 import EditExpense from "./_components/EditExpense";
 import { Dialog } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { db } from "@/utils/dbConfig";
-import { Expenses } from "@/utils/schema";
+
 import { Trash, Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -24,31 +23,42 @@ function ExpensesScreen() {
 
   const getAllExpenses = async () => {
     setLoading(true);
-    const result = await db
-      .select({
-        id: Expenses.id,
-        name: Expenses.name,
-        amount: Expenses.amount,
-        createdAt: Expenses.createdAt,
-      })
-      .from(Expenses)
-      .where(Expenses.createdBy.eq(user?.primaryEmailAddress.emailAddress))
-      .orderBy(Expenses.id.desc());
-    setExpensesList(result);
+    try {
+      const response = await fetch(`/api/expenses?createdBy=${user?.primaryEmailAddress?.emailAddress}`);
+      const result = await response.json();
+      
+      if (result.success) {
+        setExpensesList(result.data);
+      }
+    } catch (error) {
+      console.error("Error fetching expenses:", error);
+    }
     setLoading(false);
   };
 
   const handleDeleteExpense = async (expense) => {
     setLoading(true);
-    await db.delete(Expenses).where(Expenses.id.eq(expense.id));
-    toast("Gider silindi!");
-    setDeleteExpense(null);
-    getAllExpenses();
+    try {
+      const response = await fetch(`/api/expenses/${expense.id}`, {
+        method: "DELETE",
+      });
+
+      const result = await response.json();
+      
+      if (result.success) {
+        toast("Gider silindi!");
+        setDeleteExpense(null);
+        getAllExpenses();
+      }
+    } catch (error) {
+      console.error("Error deleting expense:", error);
+      toast("Hata oluştu!");
+    }
     setLoading(false);
   };
 
   return (
-    <div className="p-6 max-w-3xl mx-auto">
+    <div className="p-6 w-full">
       <div className="flex items-center justify-between mb-6">
         <h2 className="font-bold text-3xl">Giderlerim</h2>
         <Button onClick={() => setShowAdd(true)} className="rounded-full px-6 py-2 text-lg">

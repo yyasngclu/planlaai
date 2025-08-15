@@ -1,5 +1,4 @@
 import formatNumber from "@/utils";
-import getFinancialAdvice from "@/utils/getFinancialAdvice";
 import {
   PiggyBank,
   ReceiptText,
@@ -24,12 +23,18 @@ function CardInfo({ budgetList, incomeList }) {
   useEffect(() => {
     if (totalBudget > 0 || totalIncome > 0 || totalSpend > 0) {
       const fetchFinancialAdvice = async () => {
-        const advice = await getFinancialAdvice(
-          totalBudget,
-          totalIncome,
-          totalSpend
-        );
-        setFinancialAdvice(advice);
+        try {
+          const res = await fetch("/api/ai-advice", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ totalBudget, totalIncome, totalSpend }),
+          });
+          const { advice } = await res.json();
+          setFinancialAdvice(advice);
+        } catch (error) {
+          console.error("Error fetching financial advice:", error);
+          setFinancialAdvice("Üzgünüm, şu anda finansal tavsiyeyi oluşturamadım. Lütfen daha sonra tekrar deneyin. 😔");
+        }
       };
 
       fetchFinancialAdvice();

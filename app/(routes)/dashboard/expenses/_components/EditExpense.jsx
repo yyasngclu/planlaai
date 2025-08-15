@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { db } from "@/utils/dbConfig";
-import { Expenses } from "@/utils/schema";
+
 import { Loader } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "sonner";
@@ -13,19 +12,28 @@ function EditExpense({ expense, refreshData, onClose }) {
 
   const updateExpense = async () => {
     setLoading(true);
-    const result = await db
-      .update(Expenses)
-      .set({
-        name: name,
-        amount: amount,
-      })
-      .where(Expenses.id.eq(expense.id))
-      .returning();
-    setLoading(false);
-    if (result) {
-      toast("Gider güncellendi!");
-      refreshData();
-      onClose && onClose();
+    try {
+      const response = await fetch(`/api/expenses/${expense.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: name,
+          amount: amount,
+        }),
+      });
+
+      const result = await response.json();
+      setLoading(false);
+      
+      if (result.success) {
+        toast("Gider güncellendi!");
+        refreshData();
+        onClose && onClose();
+      }
+    } catch (error) {
+      console.error("Error updating expense:", error);
+      toast("Hata oluştu!");
+      setLoading(false);
     }
   };
 
