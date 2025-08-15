@@ -25,4 +25,4 @@ Give 3–4 short, practical tips in Turkish.`,
   } catch (e) {
     return new Response(JSON.stringify({ error: "AI error" }), { status: 500 });
   }
-} 
+}
