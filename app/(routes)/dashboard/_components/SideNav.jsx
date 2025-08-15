@@ -14,31 +14,37 @@ function SideNav() {
   const menuList = [
     {
       id: 1,
-      name: "Gösterge Paneli",
+      name: "Genel Bakış",
       icon: LayoutGrid,
       path: "/dashboard",
     },
     {
       id: 2,
-      name: "Gelirler",
-      icon: CircleDollarSign,
-      path: "/dashboard/incomes",
-    },
-    {
-      id: 2,
-      name: "Bütçeler",
+      name: "Hedeflerim / Bütçelerim",
       icon: PiggyBank,
       path: "/dashboard/budgets",
     },
     {
       id: 3,
+      name: "Gelirler",
+      icon: CircleDollarSign,
+      path: "/dashboard/incomes",
+    },
+    {
+      id: 4,
       name: "Giderler",
       icon: ReceiptText,
       path: "/dashboard/expenses",
     },
     {
-      id: 4,
-      name: "Hesabınızı Yükseltin",
+      id: 5,
+      name: "AI Tavsiyeleri",
+      icon: ShieldCheck,
+      path: "/dashboard/ai-advice",
+    },
+    {
+      id: 6,
+      name: "Hesabım / Yükselt",
       icon: ShieldCheck,
       path: "/dashboard/upgrade",
     },
