@@ -11,44 +11,7 @@ import { UserButton } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 function SideNav() {
-  const menuList = [
-    {
-      id: 1,
-      name: "Genel Bakış",
-      icon: LayoutGrid,
-      path: "/dashboard",
-    },
-    {
-      id: 2,
-      name: "Hedeflerim / Bütçelerim",
-      icon: PiggyBank,
-      path: "/dashboard/budgets",
-    },
-    {
-      id: 3,
-      name: "Gelirler",
-      icon: CircleDollarSign,
-      path: "/dashboard/incomes",
-    },
-    {
-      id: 4,
-      name: "Giderler",
-      icon: ReceiptText,
-      path: "/dashboard/expenses",
-    },
-    {
-      id: 5,
-      name: "AI Tavsiyeleri",
-      icon: ShieldCheck,
-      path: "/dashboard/ai-advice",
-    },
-    {
-      id: 6,
-      name: "Hesabım / Yükselt",
-      icon: ShieldCheck,
-      path: "/dashboard/upgrade",
-    },
-  ];
+  const menuList = [];
   const path = usePathname();
 
   useEffect(() => {
@@ -57,7 +20,7 @@ function SideNav() {
   return (
     <div className="h-screen p-5 border shadow-sm">
       <div className="flex flex-row items-center">
-        <Image src={"/planlaai.png"} alt="logo" width={40} height={25}  />
+        <Image src={"/planlaai.png"} alt="logo" width={40} height={25} />
         <Link href="/">
           <span
             className="text-red-800  font-bold text-3xl"
