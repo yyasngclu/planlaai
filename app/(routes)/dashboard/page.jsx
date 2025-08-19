@@ -21,9 +21,11 @@ function Dashboard() {
    */
   const getBudgetList = async () => {
     try {
-      const response = await fetch(`/api/budgets?createdBy=${user?.primaryEmailAddress?.emailAddress}`);
+      const response = await fetch(
+        `/api/budgets?createdBy=${user?.primaryEmailAddress?.emailAddress}`
+      );
       const result = await response.json();
-      
+
       if (result.success) {
         setBudgetList(result.data);
       }
@@ -39,9 +41,11 @@ function Dashboard() {
    */
   const getIncomeList = async () => {
     try {
-      const response = await fetch(`/api/incomes?createdBy=${user?.primaryEmailAddress?.emailAddress}`);
+      const response = await fetch(
+        `/api/incomes?createdBy=${user?.primaryEmailAddress?.emailAddress}`
+      );
       const result = await response.json();
-      
+
       if (result.success) {
         setIncomeList(result.data);
       }
@@ -55,9 +59,11 @@ function Dashboard() {
    */
   const getAllExpenses = async () => {
     try {
-      const response = await fetch(`/api/expenses?createdBy=${user?.primaryEmailAddress?.emailAddress}`);
+      const response = await fetch(
+        `/api/expenses?createdBy=${user?.primaryEmailAddress?.emailAddress}`
+      );
       const result = await response.json();
-      
+
       if (result.success) {
         setExpensesList(result.data);
       }
@@ -66,12 +72,13 @@ function Dashboard() {
     }
   };
 
-
   return (
     <div className="p-8">
       <h2 className="font-bold text-4xl mb-2">AI ile Sohbet Et</h2>
       <div className="mb-6 p-4 bg-purple-50 border border-purple-200 rounded-xl">
-        <p className="mb-2 text-purple-800">Yapay zekaya finansal sorular sorabilir, tavsiye alabilirsin.</p>
+        <p className="mb-2 text-purple-800">
+          Yapay zekaya finansal sorular sorabilir, tavsiye alabilirsin.
+        </p>
         <AIChat />
         {/* Örnek Sorular */}
         <div className="mt-4">

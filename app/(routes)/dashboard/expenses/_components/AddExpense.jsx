@@ -15,7 +15,9 @@ function AddExpense({ budgetId, user, refreshData, onClose }) {
   React.useEffect(() => {
     async function fetchBudgets() {
       if (!user) return;
-      const response = await fetch(`/api/budgets?createdBy=${user?.primaryEmailAddress?.emailAddress}`);
+      const response = await fetch(
+        `/api/budgets?createdBy=${user?.primaryEmailAddress?.emailAddress}`
+      );
       const result = await response.json();
       if (result.success) setBudgetOptions(result.data);
     }
@@ -42,7 +44,7 @@ function AddExpense({ budgetId, user, refreshData, onClose }) {
       const result = await response.json();
       setAmount("");
       setName("");
-      
+
       if (result.success) {
         setLoading(false);
         refreshData();
@@ -73,10 +75,16 @@ function AddExpense({ budgetId, user, refreshData, onClose }) {
         min="0"
       />
       <div className="mb-2">
-        <select className="w-full border rounded px-2 py-1" value={selectedBudgetId} onChange={e => setSelectedBudgetId(e.target.value)}>
+        <select
+          className="w-full border rounded px-2 py-1"
+          value={selectedBudgetId}
+          onChange={(e) => setSelectedBudgetId(e.target.value)}
+        >
           <option value="">Bütçe seçiniz</option>
-          {budgetOptions.map(b => (
-            <option key={b.id} value={b.id}>{b.name} {b.goal ? `- ${b.goal}` : ""}</option>
+          {budgetOptions.map((b) => (
+            <option key={b.id} value={b.id}>
+              {b.name} {b.goal ? `- ${b.goal}` : ""}
+            </option>
           ))}
         </select>
       </div>

@@ -30,7 +30,9 @@ function CreateIncomes({ refreshData }) {
   React.useEffect(() => {
     async function fetchBudgets() {
       if (!user) return;
-      const response = await fetch(`/api/budgets?createdBy=${user?.primaryEmailAddress?.emailAddress}`);
+      const response = await fetch(
+        `/api/budgets?createdBy=${user?.primaryEmailAddress?.emailAddress}`
+      );
       const result = await response.json();
       if (result.success) setBudgetOptions(result.data);
     }
@@ -55,10 +57,14 @@ function CreateIncomes({ refreshData }) {
       });
 
       const result = await response.json();
-      
+
       if (result.success) {
         refreshData();
+        setName("");
+        setAmount("");
+        setBudgetId("");
         toast("Yeni Gelir Kaynağı Oluşturuldu!");
+        document.querySelector('[data-state="open"]')?.click(); // modalı kapatmak için
       }
     } catch (error) {
       console.error("Error creating income:", error);
@@ -107,21 +113,27 @@ function CreateIncomes({ refreshData }) {
                   />
                 </div>
                 <div className="mt-2">
-                <h2 className="text-black font-medium my-1">Aylık Tutar</h2>
-                <Input
-                  type="number"
-                  placeholder="örn. 5000₺"
-                  onChange={(e) => setAmount(e.target.value)}
-                />
-                <div className="mt-2">
-                  <h2 className="text-black font-medium my-1">Bütçe Seç</h2>
-                  <select className="w-full border rounded px-2 py-1" value={budgetId} onChange={e => setBudgetId(e.target.value)}>
-                    <option value="">Bütçe seçiniz</option>
-                    {budgetOptions.map(b => (
-                      <option key={b.id} value={b.id}>{b.name} {b.goal ? `- ${b.goal}` : ""}</option>
-                    ))}
-                  </select>
-                </div>
+                  <h2 className="text-black font-medium my-1">Aylık Tutar</h2>
+                  <Input
+                    type="number"
+                    placeholder="örn. 5000₺"
+                    onChange={(e) => setAmount(e.target.value)}
+                  />
+                  <div className="mt-2">
+                    <h2 className="text-black font-medium my-1">Bütçe Seç</h2>
+                    <select
+                      className="w-full border rounded px-2 py-1"
+                      value={budgetId}
+                      onChange={(e) => setBudgetId(e.target.value)}
+                    >
+                      <option value="">Bütçe seçiniz</option>
+                      {budgetOptions.map((b) => (
+                        <option key={b.id} value={b.id}>
+                          {b.name} {b.goal ? `- ${b.goal}` : ""}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
               </div>
             </DialogDescription>

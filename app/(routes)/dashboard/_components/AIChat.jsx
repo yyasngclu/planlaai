@@ -16,9 +16,31 @@ function AIChat() {
         body: JSON.stringify({ prompt: input }),
       });
       const data = await res.json();
-      setMessages((prev) => [...prev, { role: "ai", content: data?.response || "Yanıt alınamadı." }]);
+      if (res.status !== 200) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: "ai",
+            content:
+              data?.error ||
+              "Yanıt alınamadı. Lütfen API anahtarınızı kontrol edin.",
+          },
+        ]);
+      } else {
+        setMessages((prev) => [
+          ...prev,
+          { role: "ai", content: data?.response || "Yanıt alınamadı." },
+        ]);
+      }
     } catch (err) {
-      setMessages((prev) => [...prev, { role: "ai", content: "Bir hata oluştu." }]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "ai",
+          content:
+            "Bir hata oluştu. Lütfen API anahtarınızı ve sunucu bağlantısını kontrol edin.",
+        },
+      ]);
     }
     setInput("");
     setLoading(false);
@@ -28,12 +50,19 @@ function AIChat() {
     <div className="w-full max-w-xl mx-auto p-4 bg-white rounded-xl shadow-lg border border-red-100">
       <div className="mb-4 h-72 overflow-y-auto p-4 bg-red-50 rounded-xl flex flex-col gap-2">
         {messages.map((msg, idx) => (
-          <div key={idx} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+          <div
+            key={idx}
+            className={`flex ${
+              msg.role === "user" ? "justify-end" : "justify-start"
+            }`}
+          >
             <div
               className={`max-w-[70%] px-4 py-2 rounded-2xl shadow text-sm break-words
-                ${msg.role === "user"
-                  ? "bg-red-800 text-white rounded-br-none"
-                  : "bg-purple-100 text-purple-800 rounded-bl-none border border-purple-200"}
+                ${
+                  msg.role === "user"
+                    ? "bg-red-800 text-white rounded-br-none"
+                    : "bg-purple-100 text-purple-800 rounded-bl-none border border-purple-200"
+                }
               `}
             >
               {msg.content}
